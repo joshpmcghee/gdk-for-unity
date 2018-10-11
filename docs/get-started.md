@@ -318,7 +318,7 @@ Let’s take a look at how many simulated player clients are now running around 
 
 The [World Inspector](https://docs.improbable.io/reference/latest/shared/operate/inspector#inspector) provides a real time view of what’s happening in a deployment, from the [perspective of SpatialOS](https://docs.improbable.io/reference/latest/shared/concepts/spatialos): where all the entities are, what their components are, which workers are running and which entities they are reading from and writing to.
 
-We can use it, for instance, to highlight where all the Simulated Players and Player Entities are in the world (note: not cool to identify where your friends are hiding)
+We can use it, for instance, to highlight where all the Simulated Players and Player Entities are in the world (note: it's not cool to identify where your friends are hiding).
 
 <img src="{{assetRoot}}assets/inspector-simulated-player.png" style="margin: 0 auto; display: block;" />
 
