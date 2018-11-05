@@ -1,8 +1,9 @@
 using Improbable.Common;
 using Improbable.Gdk.Core;
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Subscriptions;
 using Improbable.Worker;
 using Improbable.Worker.Core;
+using Unity.Entities;
 using UnityEngine;
 
 #region Diagnostic control
@@ -16,22 +17,21 @@ namespace Playground.MonoBehaviours
 {
     public class CubeSpawnerInputBehaviour : MonoBehaviour
     {
-        [Require] private PlayerInput.Requirable.Writer playerInputWriter;
-        [Require] private CubeSpawner.Requirable.Reader cubeSpawnerReader;
-        [Require] private CubeSpawner.Requirable.CommandRequestSender cubeSpawnerCommandSender;
-        [Require] private CubeSpawner.Requirable.CommandResponseHandler cubeSpawnerCommandResponseHandler;
+        [Require] private PlayerInputWriter playerInputWriter;
+        [Require] private CubeSpawnerReader cubeSpawnerReader;
+        [Require] private CubeSpawnerCommandSender cubeSpawnerCommandSender;
+        [Require] private CubeSpawnerCommandReceiver cubeSpawnerCommandResponseHandler;
+
+        [Require] private EntityId entityId;
+        [Require] private World world;
 
         private ILogDispatcher logDispatcher;
         private EntityId ownEntityId;
 
         private void OnEnable()
         {
-            var spatialOSComponent = GetComponent<SpatialOSComponent>();
-            logDispatcher = spatialOSComponent.Worker.LogDispatcher;
-            ownEntityId = spatialOSComponent.SpatialEntityId;
-
-            cubeSpawnerCommandResponseHandler.OnSpawnCubeResponse += OnSpawnCubeResponse;
-            cubeSpawnerCommandResponseHandler.OnDeleteSpawnedCubeResponse += OnDeleteSpawnedCubeResponse;
+            //cubeSpawnerCommandResponseHandler.OnSpawnCubeResponse += OnSpawnCubeResponse;
+            //cubeSpawnerCommandResponseHandler.OnDeleteSpawnedCubeResponse += OnDeleteSpawnedCubeResponse;
         }
 
         private void OnSpawnCubeResponse(CubeSpawner.SpawnCube.ReceivedResponse response)
@@ -71,7 +71,8 @@ namespace Playground.MonoBehaviours
 
         private void SendSpawnCubeCommand()
         {
-            cubeSpawnerCommandSender.SendSpawnCubeRequest(ownEntityId, new Empty());
+            var request = CubeSpawner.SpawnCube.CreateRequest(entityId, new Empty());
+            cubeSpawnerCommandSender.SendSpawnCubeCommand(request);
         }
 
         private void SendDeleteCubeCommand()
@@ -84,10 +85,11 @@ namespace Playground.MonoBehaviours
                 return;
             }
 
-            cubeSpawnerCommandSender.SendDeleteSpawnedCubeRequest(ownEntityId, new DeleteCubeRequest
+            var request = CubeSpawner.DeleteSpawnedCube.CreateRequest(entityId, new DeleteCubeRequest
             {
                 CubeEntityId = spawnedCubes[0]
             });
+            cubeSpawnerCommandSender.SendDeleteSpawnedCubeCommand(request);
         }
     }
 }

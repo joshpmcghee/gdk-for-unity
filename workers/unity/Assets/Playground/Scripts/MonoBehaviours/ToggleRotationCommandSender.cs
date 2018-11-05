@@ -1,6 +1,6 @@
 using Improbable.Common;
 using Improbable.Gdk.Core;
-using Improbable.Gdk.GameObjectRepresentation;
+using Improbable.Gdk.Subscriptions;
 using Improbable.Worker;
 using Improbable.Worker.Core;
 using UnityEngine;
@@ -16,15 +16,17 @@ namespace Playground.MonoBehaviours
 {
     public class ToggleRotationCommandSender : MonoBehaviour
     {
-        [Require] private SpinnerRotation.Requirable.Reader reader;
-        [Require] private SpinnerRotation.Requirable.CommandRequestSender requestSender;
-        [Require] private SpinnerRotation.Requirable.CommandResponseHandler responseHandler;
-        private EntityId ownEntityId;
+        [Require] private SpinnerRotationReader reader;
+        [Require] private SpinnerRotationCommandSender requestSender;
+
+        //[SamiRequire] private SpinnerRotation.Requirable.CommandResponseHandler responseHandler;
+
+        [Require] private EntityId ownEntityId;
 
         private void OnEnable()
         {
-            ownEntityId = GetComponent<SpatialOSComponent>().SpatialEntityId;
-            responseHandler.OnSpinnerToggleRotationResponse += ResponseHandlerOnOnSpinnerToggleRotationResponse;
+            //ownEntityId = GetComponent<SpatialOSComponent>().SpatialEntityId;
+            //responseHandler.OnSpinnerToggleRotationResponse += ResponseHandlerOnOnSpinnerToggleRotationResponse;
         }
 
         private void ResponseHandlerOnOnSpinnerToggleRotationResponse(
@@ -32,8 +34,8 @@ namespace Playground.MonoBehaviours
         {
             if (obj.StatusCode != StatusCode.Success)
             {
-                GetComponent<SpatialOSComponent>().Worker.LogDispatcher.HandleLog(LogType.Error,
-                    new LogEvent($"Spin command request failed: {obj.StatusCode}, message: {obj.Message}"));
+                // GetComponent<SpatialOSComponent>().Worker.LogDispatcher.HandleLog(LogType.Error,
+                //     new LogEvent($"Spin command request failed: {obj.StatusCode}, message: {obj.Message}"));
             }
         }
 
@@ -47,7 +49,8 @@ namespace Playground.MonoBehaviours
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                requestSender.SendSpinnerToggleRotationRequest(ownEntityId, new Empty());
+                var request = SpinnerRotation.SpinnerToggleRotation.CreateRequest(ownEntityId, new Empty());
+                requestSender.SendSpinnerToggleRotationCommand(request);
             }
         }
     }
