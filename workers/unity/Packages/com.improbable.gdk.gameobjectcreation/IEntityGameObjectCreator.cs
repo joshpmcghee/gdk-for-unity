@@ -1,4 +1,5 @@
 using Improbable.Gdk.Core;
+using Improbable.Gdk.Subscriptions;
 using Improbable.Worker;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Improbable.Gdk.GameObjectCreation
         /// <returns>
         ///     A GameObject to be linked to the entity, or null if no GameObject should be linked.
         /// </returns>
-        GameObject OnEntityCreated(SpatialOSEntity entity);
+        void OnEntityCreated(SpatialOSEntity entity, EntityGameObjectLinker linker);
 
         /// <summary>
         ///     Called when a SpatialOS Entity is removed from the worker's view.
@@ -24,6 +25,6 @@ namespace Improbable.Gdk.GameObjectCreation
         /// <param name="linkedGameObject">
         ///     The GameObject linked to the entity, or null if no GameObject is linked.
         /// </param>
-        void OnEntityRemoved(EntityId entityId, GameObject linkedGameObject);
+        void OnEntityRemoved(EntityId entityId);
     }
 }
