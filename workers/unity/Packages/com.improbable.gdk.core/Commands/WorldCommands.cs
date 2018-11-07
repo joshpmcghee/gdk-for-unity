@@ -13,11 +13,6 @@ namespace Improbable.Gdk.Core.Commands
 {
     public static partial class WorldCommands
     {
-        public class WorldCommandSender
-        {
-
-        }
-
         internal static void AddWorldCommandRequesters(World world, EntityManager manager, Unity.Entities.Entity entity)
         {
             var createEntitySender = new CreateEntity.CommandSender
