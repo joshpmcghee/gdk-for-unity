@@ -55,12 +55,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.ReserveEntityIds.CreateRequest(numberOfEntityIds, timeoutMillis, context);
+                        new WorldCommands.ReserveEntityIds.Request(numberOfEntityIds, timeoutMillis, context);
 
-                    entityManager.GetComponentData<ReserveEntityIds.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -83,12 +80,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.ReserveEntityIds.CreateRequest(numberOfEntityIds, timeoutMillis, callback);
+                        new WorldCommands.ReserveEntityIds.Request(numberOfEntityIds, timeoutMillis, callback);
 
-                    entityManager.GetComponentData<ReserveEntityIds.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -117,12 +111,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.CreateEntity.CreateRequest(entityTemplate, entityId, timeoutMillis, context);
+                        new WorldCommands.CreateEntity.Request(entityTemplate, entityId, timeoutMillis, context);
 
-                    entityManager.GetComponentData<CreateEntity.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -147,12 +138,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.CreateEntity.CreateRequest(entityTemplate, null, timeoutMillis, callback);
+                        new WorldCommands.CreateEntity.Request(entityTemplate, null, timeoutMillis, callback);
 
-                    entityManager.GetComponentData<CreateEntity.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -182,12 +170,9 @@ namespace Improbable.Gdk.Core.Commands
                     }
 
                     var request =
-                        WorldCommands.CreateEntity.CreateRequest(entityTemplate, entityId, timeoutMillis, callback);
+                        new WorldCommands.CreateEntity.Request(entityTemplate, entityId, timeoutMillis, callback);
 
-                    entityManager.GetComponentData<CreateEntity.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -208,12 +193,9 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.DeleteEntity.CreateRequest(entityId, timeoutMillis, context);
+                    var request = new WorldCommands.DeleteEntity.Request(entityId, timeoutMillis, context);
 
-                    entityManager.GetComponentData<DeleteEntity.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -235,12 +217,9 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.DeleteEntity.CreateRequest(entityId, timeoutMillis, callback);
+                    var request = new WorldCommands.DeleteEntity.Request(entityId, timeoutMillis, callback);
 
-                    entityManager.GetComponentData<DeleteEntity.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
-
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -262,11 +241,9 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.EntityQuery.CreateRequest(entityQuery, timeoutMillis, context);
-                    entityManager.GetComponentData<EntityQuery.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
+                    var request = new WorldCommands.EntityQuery.Request(entityQuery, timeoutMillis, context);
 
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 /// <summary>
@@ -288,11 +265,9 @@ namespace Improbable.Gdk.Core.Commands
                         return -1;
                     }
 
-                    var request = WorldCommands.EntityQuery.CreateRequest(entityQuery, timeoutMillis, callback);
-                    entityManager.GetComponentData<EntityQuery.CommandSender>(entity)
-                        .RequestsToSend.Add(request);
+                    var request = new WorldCommands.EntityQuery.Request(entityQuery, timeoutMillis, callback);
 
-                    return request.RequestId;
+                    return commandSystem.SendCommand(request, entity);
                 }
 
                 [InjectableId(InjectableType.WorldCommandRequestSender, InjectableId.NullComponentId)]
