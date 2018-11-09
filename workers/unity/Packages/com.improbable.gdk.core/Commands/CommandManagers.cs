@@ -41,6 +41,8 @@ namespace Improbable.Gdk.Core.Commands
     public interface ICommandRequestReceiver<TReceivedRequest> where TReceivedRequest : IReceivedCommandRequest
     {
         List<TReceivedRequest> GetRequestsReceived();
+
+        // todo if we want this it should probably be a span rather than a list
         List<TReceivedRequest> GetRequestsReceivedForEntityId(EntityId entity);
     }
 

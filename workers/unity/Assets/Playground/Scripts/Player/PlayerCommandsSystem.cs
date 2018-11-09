@@ -89,7 +89,7 @@ namespace Playground
             var launchDirection = ray.direction.ToSpatialVector3f();
 
             sender.RequestsToSend.Add(new Launcher.LaunchEntity.Request(playerId,
-                new LaunchCommandRequest(component.SpatialEntityId, impactPoint, launchDirection,
+                new LaunchCommandRequest(component.EntityId, impactPoint, launchDirection,
                     command == PlayerCommand.LaunchLarge ? LargeEnergy : SmallEnergy,
                     playerId
                 )));

@@ -49,7 +49,7 @@ namespace Playground.MonoBehaviours
 
             if (Input.GetKeyDown(KeyCode.T))
             {
-                var request = SpinnerRotation.SpinnerToggleRotation.CreateRequest(ownEntityId, new Empty());
+                var request = new SpinnerRotation.SpinnerToggleRotation.Request(ownEntityId, new Empty());
                 requestSender.SendSpinnerToggleRotationCommand(request);
             }
         }
