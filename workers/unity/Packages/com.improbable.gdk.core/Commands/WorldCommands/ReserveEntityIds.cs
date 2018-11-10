@@ -96,6 +96,11 @@ namespace Improbable.Gdk.Core.Commands
                     Context = req.Context;
                     RequestId = requestId;
                 }
+
+                long IReceivedCommandResponse.GetRequestId()
+                {
+                    return RequestId;
+                }
             }
 
             /// <summary>

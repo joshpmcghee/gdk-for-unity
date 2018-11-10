@@ -109,6 +109,11 @@ namespace Improbable.Gdk.Core.Commands
                         Result.Add(entityIdToEntity.Key, new EntityQuerySnapshot(entityIdToEntity.Value, world));
                     }
                 }
+
+                long IReceivedCommandResponse.GetRequestId()
+                {
+                    return RequestId;
+                }
             }
 
             /// <summary>
